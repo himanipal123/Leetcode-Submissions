@@ -14,29 +14,23 @@ public:
         if(head==NULL || head->next==NULL){
             return head;
         }
-        unordered_map<int,int>mp;
-        ListNode* temp=head;
-        while(temp!=NULL){
-            mp[temp->val]++;
-            temp=temp->next;
-        }
-        ListNode* newhead=NULL;
-        ListNode* curr=NULL;
-        temp=head;
-        while(temp!=NULL){
-            if(mp[temp->val]==1){
-                if(newhead==NULL){
-                    newhead=new ListNode(temp->val);
-                    curr=newhead;
+        ListNode* dummy=new ListNode(0);
+         ListNode* prev=dummy;
+        dummy->next=head;
+         ListNode* curr=head;
+         while(curr!=NULL){
+            if(curr->next!=NULL && curr->val == curr->next->val){
+                int x=curr->val;
+                while(curr!=NULL && curr->val==x){
+                    curr=curr->next;
                 }
-                else{
-                    ListNode* newnode=new ListNode(temp->val);
-                    curr->next=newnode;
-                    curr=newnode;
-                }
+                prev->next=curr;
             }
-            temp=temp->next;
-        }
-        return newhead;
+            else{
+                prev=curr;
+                curr=curr->next;
+            }
+         }
+         return dummy->next;
     }
 };
